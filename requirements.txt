@@ -6,3 +6,4 @@ PyPDF2
 selenium
 playwright
 pillow
+gunicorn
