@@ -1,10 +1,9 @@
 from flask import Flask, render_template, request
 import sqlite3
-import os
 
-from generar_pdf import generar_docx           # Usa el nuevo nombre de la función
+from generar_pdf import generar_pdf
 from automatizar_pin import automatizar_pin
-from enviar_email import enviar_email          # Asegúrate que recibe ruta_docx y lo adjunta
+from enviar_email import enviar_email  # Asegúrate que esta función reciba un argumento "referencia" (número de documento)
 
 app = Flask(__name__)
 
@@ -57,23 +56,23 @@ def submit():
             conn.commit()
             conn.close()
 
-            # 2. Generar Word (.docx)
-            ruta_docx = generar_docx(datos)
+            # 2. Generar PDF
+            ruta_pdf = generar_pdf(datos)
 
             # 3. Automatizar generación del PIN/referencia en Paynet
-            automatizar_pin(datos)
+            automatizar_pin(datos)  # Aquí no necesitas obtener ningún link, solo ejecutar el bot con los datos
 
-            # 4. Enviar el correo electrónico con el Word (.docx) adjunto
+            # 4. Enviar el correo electrónico con PDF y referencia personalizada
             referencia = datos["numero_documento"]
             enviar_email(
                 nombre=datos["nombres"],
                 apellido=datos["apellidos"],
                 email=datos["correo"],
-                ruta_docx=ruta_docx,
+                ruta_pdf=ruta_pdf,
                 referencia=referencia
             )
 
-            return "✅ Registro exitoso. Revisa tu correo electrónico para descargar tu hoja de ruta (archivo Word) y realizar tu pago. Puedes cerrar esta ventana."
+            return "✅ Registro exitoso. Revisa tu correo electrónico para descargar tu hoja de ruta y realizar tu pago. Puedes cerrar esta ventana."
 
         except Exception as e:
             print("Error en el proceso:", e)
@@ -88,14 +87,6 @@ def ver_registros():
     conn.close()
     return render_template("ver_registros.html", pacientes=pacientes)
 
-# (Opcional) Endpoint para descargar DOCX manualmente
-from flask import send_file
-@app.route("/descargar_hoja/<doc_id>")
-def descargar_hoja(doc_id):
-    archivo = os.path.abspath(f"PDFsGenerados/{doc_id}_hoja_ruta.docx")
-    return send_file(archivo, as_attachment=True)
-
 if __name__ == "__main__":
-    import os
-    port = int(os.environ.get("PORT", 10000))
-    app.run(host="0.0.0.0", port=port)
+    app.run()
+

@@ -1,10 +1,12 @@
 import os
 from docx import Document
+import win32com.client
+import pythoncom  # Necesario para inicializar la COM en hilos de Flask
 
-def generar_docx(datos):
+def generar_pdf(datos):
     """
-    Genera un archivo Word (.docx) a partir de la plantilla usando los datos del paciente.
-    Retorna la ruta absoluta al archivo generado.
+    Genera un PDF a partir de la plantilla Word usando los datos del paciente.
+    Retorna la ruta absoluta al PDF generado.
     """
     # Cargar plantilla
     doc = Document("HOJA DE RUTA PROCESO DE SOLICITUD EVALUACION Y CERTIFICACION.docx")
@@ -67,8 +69,22 @@ def generar_docx(datos):
     for marcador, valor in mapeo.items():
         reemplazar_en_doc(doc, marcador, valor)
 
-    # Guardar el .docx generado
+    # Guardar el .docx y convertir a PDF
     os.makedirs("PDFsGenerados", exist_ok=True)
     output_docx = os.path.abspath(f"PDFsGenerados/{doc_id}_hoja_ruta.docx")
+    output_pdf = os.path.abspath(f"PDFsGenerados/{doc_id}_hoja_ruta.pdf")
     doc.save(output_docx)
-    return output_docx
+
+    # Inicializar COM y convertir docx a PDF usando Word (requiere Windows)
+    pythoncom.CoInitialize()  # <- ¡Esta línea soluciona tu error!
+    word = win32com.client.Dispatch("Word.Application")
+    word.Visible = False
+    word.DisplayAlerts = 0
+    try:
+        word_doc = word.Documents.Open(output_docx)
+        word_doc.SaveAs(output_pdf, FileFormat=17)  # 17 = PDF
+        word_doc.Close()
+    finally:
+        word.Quit()
+
+    return output_pdf
