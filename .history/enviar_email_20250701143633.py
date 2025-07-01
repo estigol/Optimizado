@@ -12,9 +12,9 @@ password = "weej osel uccp wqos"               # App password, NO tu clave de gm
 bcc_email = "joanse4@gmail.com"   # CCO de auditoría (puedes poner el mismo sender si lo deseas)
 
 
-def enviar_email(nombre, apellido, email, ruta_docx, referencia=None):
+def enviar_email(nombre, apellido, email, ruta_pdf, referencia=None):
     """
-    Envía el DOCX generado al correo del usuario y en copia oculta a calermedic.recepcion@gmail.com.
+    Envía el PDF generado al correo del usuario y en copia oculta a calermedic.recepcion@gmail.com.
     referencia: número de referencia para el trámite, se incluirá en el asunto y cuerpo del correo si se proporciona.
     """
     # Asunto del correo, incluyendo referencia si se proporciona
@@ -24,13 +24,16 @@ def enviar_email(nombre, apellido, email, ruta_docx, referencia=None):
         asunto = "Hoja de Ruta Inscripción - Calermedic"
 
     # Cuerpo del correo
+    cuerpo = f"""\
+"""
     if referencia:
         cuerpo = f"Referencia de trámite: {referencia}\n\n"
     else:
         cuerpo = ""
-    cuerpo += f"""Estimado(a) {nombre} {apellido},
+    cuerpo += f"""\
+Estimado(a) {nombre} {apellido},
 
-Gracias por confiar en Calermedic. Adjunto encontrarás tu hoja de ruta (archivo Word), la cual deberás presentar en nuestras oficinas para agilizar tu proceso.
+Gracias por confiar en Calermedic. Adjunto encontrarás tu hoja de ruta, la cual deberás presentar en nuestras oficinas para agilizar tu proceso.
 
 Si tienes alguna duda, puedes responder a este correo o comunicarte con nosotros al teléfono 3202184633 (Fabián Administrador).
 
@@ -51,13 +54,10 @@ Solo ingresa tu número de documento de identidad en cada una de las casillas y 
 
     mensaje.attach(MIMEText(cuerpo, "plain"))
 
-    # Adjuntar DOCX (Word)
-    with open(ruta_docx, "rb") as f:
-        adjunto = MIMEApplication(
-            f.read(),
-            _subtype="vnd.openxmlformats-officedocument.wordprocessingml.document"
-        )
-        adjunto.add_header("Content-Disposition", "attachment", filename=os.path.basename(ruta_docx))
+    # Adjuntar PDF
+    with open(ruta_pdf, "rb") as f:
+        adjunto = MIMEApplication(f.read(), _subtype="pdf")
+        adjunto.add_header("Content-Disposition", "attachment", filename=os.path.basename(ruta_pdf))
         mensaje.attach(adjunto)
 
     try:
@@ -70,3 +70,4 @@ Solo ingresa tu número de documento de identidad en cada una de las casillas y 
     except Exception as e:
         print("Error al enviar el correo:", e)
         raise
+
