@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario de Registro CRC</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Formulario de Registro para Examen Médico - Calermedic</h2>
+    <form method="POST" action="/submit">
+
+        <!-- Datos de identidad -->
+        <div class="row mb-3">
+            <div class="col-md-6"><label class="form-label">Nombres</label><input type="text" class="form-control" name="nombres" required></div>
+            <div class="col-md-6"><label class="form-label">Apellidos</label><input type="text" class="form-control" name="apellidos" required></div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label class="form-label">Tipo de Documento</label>
+                <select class="form-select" name="tipo_documento" required>
+                    <option value="">Seleccione...</option>
+                    <option>Cédula</option>
+                    <option>Pasaporte</option>
+                    <option>Cédula De Extranjería</option>
+                    <option>Carnet Diplomático</option>
+                    <option>Tarjeta De Identidad</option>
+                    <option>Permiso Temporal de Protección</option>
+                </select>
+            </div>
+            <div class="col-md-6"><label class="form-label">Número de Documento</label><input type="text" class="form-control" name="numero_documento" required></div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6"><label class="form-label">Ciudad de Expedición del Documento</label><input type="text" class="form-control" name="ciudad_expedicion_documento" required></div>
+            <div class="col-md-6"><label class="form-label">Nacionalidad</label><input type="text" class="form-control" name="nacionalidad" value="Colombiano" required></div>
+        </div>
+
+        <!-- Sección de trámite -->
+        <div class="row mb-3">
+            <div class="col-md-6"><label class="form-label">Trámite - Moto</label>
+                <select class="form-select" name="tramite_moto"><option value="">Seleccione...</option><option>Primera vez</option><option>Refrendación</option><option>Recategorización</option></select>
+            </div>
+            <div class="col-md-6"><label class="form-label">Categoría Moto</label>
+                <select class="form-select" name="categoria_moto"><option value="">Seleccione...</option><option>A1</option><option>A2</option></select>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6"><label class="form-label">Trámite - Carro</label>
+                <select class="form-select" name="tramite_carro"><option value="">Seleccione...</option><option>Primera vez</option><option>Refrendación</option><option>Recategorización</option></select>
+            </div>
+            <div class="col-md-6"><label class="form-label">Categoría Carro</label>
+                <select class="form-select" name="categoria_carro"><option value="">Seleccione...</option><option>B1</option><option>B2</option><option>B3</option><option>C1</option><option>C2</option><option>C3</option></select>
+            </div>
+        </div>
+
+        <!-- Contacto y salud -->
+        <div class="row mb-3">
+            <div class="col-md-6"><label class="form-label">Fecha de Nacimiento</label><input type="date" class="form-control" name="fecha_nacimiento" required></div>
+            <div class="col-md-6">
+                <label class="form-label">Género</label>
+                <select class="form-select" name="genero" required>
+                    <option value="">Seleccione...</option>
+                    <option>Masculino</option>
+                    <option>Femenino</option>
+                </select>
+            </div>
+        </div>
+        <div class="mb-3"><label class="form-label">Grupo Sanguíneo / RH</label><input type="text" class="form-control" name="grupo_sanguineo"></div>
+        <div class="mb-3"><label class="form-label">Estado Civil</label><input type="text" class="form-control" name="estado_civil"></div>
+        <div class="mb-3"><label class="form-label">Dirección</label><input type="text" class="form-control" name="direccion"></div>
+        <div class="mb-3"><label class="form-label">Ciudad</label><input type="text" class="form-control" name="ciudad"></div>
+        <div class="mb-3"><label class="form-label">Correo Electrónico</label><input type="email" class="form-control" name="correo"></div>
+        <div class="mb-3"><label class="form-label">Teléfono</label><input type="text" class="form-control" name="telefono"></div>
+        <div class="mb-3"><label class="form-label">Ocupación</label><input type="text" class="form-control" name="ocupacion"></div>
+        <div class="mb-3">
+            <label class="form-label">Escolaridad</label>
+            <select class="form-select" name="escolaridad"><option>Ninguna</option><option>Primaria</option><option>Secundaria</option><option>Técnico</option><option>Tecnólogo</option><option>Profesional</option><option>Posgrado</option><option>Otro</option></select>
+        </div>
+        <div class="mb-3"><label class="form-label">EPS</label><input type="text" class="form-control" name="eps" required></div>
+        <div class="mb-3">
+            <label class="form-label">Tipo de Vinculación</label>
+            <select class="form-select" name="tipo_vinculacion"><option>Contributivo</option><option>Subsidiado</option><option>Otro</option></select>
+        </div>
+        <div class="mb-3"><label class="form-label">En caso de emergencia avisar a:</label><input type="text" class="form-control" name="contacto_emergencia"></div>
+        <div class="mb-3"><label class="form-label">Teléfono de Emergencia</label><input type="text" class="form-control" name="telefono_emergencia"></div>
+        <div class="mb-3"><label class="form-label">Parentesco</label><input type="text" class="form-control" name="parentesco_emergencia"></div>
+        <div class="mb-3"><label class="form-label">Acompañante (solo menores de edad)</label><input type="text" class="form-control" name="acompanante_menor"></div>
+
+        <!-- Otros -->
+        <div class="row mb-3">
+            <div class="col-md-3"><label>¿Usa lentes?</label><select class="form-select" name="usa_lentes"><option>Sí</option><option>No</option></select></div>
+            <div class="col-md-3"><label>¿Audífonos?</label><select class="form-select" name="usa_audifonos"><option>Sí</option><option>No</option></select></div>
+            <div class="col-md-3"><label>¿Prótesis?</label><select class="form-select" name="tiene_protesis"><option>Sí</option><option>No</option></select></div>
+            <div class="col-md-3"><label>¿Marcapasos?</label><select class="form-select" name="tiene_marcapasos"><option>Sí</option><option>No</option></select></div>
+        </div>
+        <div class="mb-3"><label>¿Consume medicamentos?</label><select class="form-select" name="consume_medicamentos"><option>Sí</option><option>No</option></select></div>
+        <div class="mb-3"><label>¿Cuáles medicamentos?</label><input type="text" class="form-control" name="medicamentos"></div>
+        <div class="mb-3"><label>¿Ha tenido cirugías?</label><select class="form-select" name="ha_tenido_cirugias"><option>Sí</option><option>No</option></select></div>
+        <div class="mb-3"><label>¿Cuáles cirugías?</label><input type="text" class="form-control" name="cirugias"></div>
+        <div class="mb-3"><label>¿Consume alcohol?</label><select class="form-select" name="consume_alcohol"><option>Frecuentemente</option><option>Ocasional</option><option>Nunca</option></select></div>
+        <div class="mb-3"><label>¿Tratamiento psicológico o psiquiátrico?</label><select class="form-select" name="tratamiento_psico"><option>Sí</option><option>No</option></select></div>
+
+        <div class="d-grid gap-2 mt-4">
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </div>
+
+    </form>
+</div>
+</body>
+</html>
