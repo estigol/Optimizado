@@ -220,16 +220,12 @@ def automatizar_pin(datos):
         return True
 
     except TimeoutError as e:
-        print('TimeoutError:', repr(e))
-        return None
-    except Exception as e:
-        print("Error general en Playwright:", repr(e))
+        print('TimeoutError:', e)
         return None
     finally:
         context.close()
         browser.close()
         playwright.stop()
-
 
 if __name__ == '__main__':
     datos_test = {
